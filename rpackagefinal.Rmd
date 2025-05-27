@@ -1,0 +1,169 @@
+---
+title: "Importing Data in R - Exploring Packages and Their Advantages"
+shorttitle: "Exploring Packages and Their Advantages"
+# Set names and affiliations.
+# It is nice to specify everyone's orcid, if possible.
+# There can be only one corresponding author, but declaring one is optional.
+author:
+  - name: "Yassaman Shafabakhsh (Matriculation:400806611)"
+    corresponding: true
+    email: shafabakhsh.yassaman@stud.hs-fresenius.de
+    url: 
+    affiliations:
+      - id: 
+        name: "Hochschule Fresenius - University of Applied Science"
+        group: "International Management, M.A."
+        department: 
+        address: 
+        city: 
+        region: 
+        country: 
+        postal-code: 
+blank-lines-above-author-note: 2
+author-note:
+  status-changes: 
+    # Example: [Author name] is now at [affiliation].
+    affiliation-change:
+    # Example: [Author name] is deceased.
+    deceased: ~
+  # Disclosures condensed to one paragraph, but you can start a field with two line breaks to break them up: \n\nNew Paragraph
+  disclosures:
+    # Example: This study was registered at X (Identifier Y).
+    study-registration: ~
+    # Acknowledge and cite data/materials to be shared.
+    data-sharing: ~
+    # Example: This article is based on data published in [Reference].
+    # Example: This article is based on the dissertation completed by [citation].  
+    related-report: ~
+    # Example: [Author name] has been a paid consultant for Corporation X, which funded this study.
+    conflict-of-interest: The authors have no conflicts of interest to disclose.
+    # Example: This study was supported by Grant [Grant Number] from [Funding Source].
+    financial-support: ~
+    # Example: The authors are grateful to [Person] for [Reason].
+    gratitude: ~
+    # Example. Because the authors are equal contributors, order of authorship was determined by a fair coin toss.
+    authorship-agreements: ~
+abstract: "This document is according to the R studio"
+keywords: [importing, Data, R Studio, packages, exploring, extentions, format, exporting]
+# If true, tables and figures are mingled with the text instead of listed at the end of the document.
+impact-statement: ~
+floatsintext: true
+# Numbered lines (.pdf and .docx only)
+numbered-lines: false
+# File with references
+bibliography: bibliography.bib
+csl: apa.csl
+# Suppress title page
+suppress-title-page: false
+# Link citations to references
+link-citations: true
+# Masks references that appear in the masked-citations list
+mask: false
+masked-citations:
+# If true, adds today's date below author affiliations. If text, can be any value.
+# This is not standard APA format, but it is convenient.
+# Works with docx, html, and typst. 
+draft-date: false
+# Language options. See https://quarto.org/docs/authoring/language.html
+lang: en-US
+language:
+  citation-last-author-separator: "and"
+  citation-masked-author: "Masked Citation"
+  citation-masked-date: "n.d."
+  citation-masked-title: "Masked Title"
+  email: "Email"
+  title-block-author-note: "Author Note"
+  title-block-correspondence-note: "Correspondence concerning this article should be addressed to"
+  title-block-role-introduction: "Author roles were classified using the Contributor Role Taxonomy (CRediT; [credit.niso.org](https://credit.niso.org)) as follows:"
+  title-impact-statement: "Impact Statement"
+  references-meta-analysis: "References marked with an asterisk indicate studies included in the meta-analysis."
+output: 
+  html_document:
+    toc: true
+    number_section: true
+    css: apa.css
+---
+happy happy happy happppppppppppyyyyyyyyyyy
+
+# Introduction
+
+Importing data text text text
+
+# Reading data from files
+
+data table
+
+# Key R Packages for Data Import
+
+packages,write up on R package (2line), example, pros and cons
+
+-   
+
+    1.  Base R (read.csv, read.table)
+
+Example: mydata \<- read.csv("data.csv") Pros: No installation required; works for simple, small files. Cons: Slow with large or complex datasets.
+
+-   
+
+    2.  readr (tidyverse)
+
+Example: library(readr) data \<- read_csv("data.csv") Pros: Fast, efficient, clear error messages, good for large files. Cons: Focused on delimited text files.
+
+-   
+
+    3.  readxl and openxlsx (Excel)
+
+Example: library(readxl) excel_data \<- read_excel("data.xlsx") Pros: Reads both .xls and .xlsx, no need for Excel/Java. Cons: Not suited for very large Excel files.
+
+-   
+
+    4.  haven (SPSS, Stata, SAS)
+
+Example: library(haven) spss_data \<- read_sav("file.sav") Pros: Preserves metadata and labels; integrates with tidyverse. Cons: Limited to statistical formats.
+
+-   
+
+    5.  data.table::fread
+
+Example: library(data.table) big_data \<- fread("largefile.csv") Pros: Extremely fast; auto-detects delimiters. Cons: Slightly different syntax.
+
+-   
+
+    6.  rio Rio, which stands for "R Input Output" is a user-friendly R package designed to simplify the process of importing and exporting data between R and a wide variety of file formats.
+
+rio provides a single, easy-to-use function (import()) that automatically detects the file type and uses the appropriate backend package to read the data into R.
+
+Example: library(rio) any_data \<- import("file.xlsx") Pros: One function for almost all formats. Cons: Less control for advanced customizations.
+
+Read more on importing data in R for Data Science [@wickham2023students]
+
+# Conclusion
+
+# Reference
+
+# Affadative
+
+I hereby affirm that this submitted paper was authored unaided and solely by me. Additionally, no other sources than those in the reference list were used. Parts of this paper, including tables and figures, that have been taken either verbatim or analogously from other works have in each case been properly cited with regard to their origin and authorship. This paper either in parts or in its entirety, be it in the same or similar form, has not been submitted to any other examination board and has not been published.
+
+I acknowledge that the university may use plagiarism detection software to check my thesis. I agree to cooperate with any investigation of suspected plagiarism and to provide any additional information or evidence requested by the university.
+
+Checklist:
+
+-   [ ] The handout contains 3-5 pages of text.
+-   [ ] The submission contains the Quarto file of the handout.
+-   [ ] The submission contains the Quarto file of the presentation.
+-   [ ] The submission contains the HTML file of the handout.
+-   [ ] The submission contains the HTML file of the presentation.
+-   [ ] The submission contains the PDF file of the handout.
+-   [ ] The submission contains the PDF file of the presentation.
+-   [ ] The title page of the presentation and the handout contain personal details (name, email, matriculation number).
+-   [ ] The handout contains a abstract.
+-   [ ] The presentation and the handout contain a bibliography, created using BibTeX with APA citation style.
+-   [ ] Either the handout or the presentation contains R code that proof the expertise in coding.
+-   [ ] The handout includes an introduction to guide the reader and a conclusion summarizing the work and discussing potential further investigations and readings, respectively.
+-   [ ] All significant resources used in the report and R code development.
+-   [ ] The filled out Affidavit.
+-   [ ] A concise description of the successful use of Git and GitHub, as detailed here: <https://github.com/hubchev/make_a_pull_request>.
+-   [ ] The link to the presentation and the handout published on GitHub.
+
+\[Yassaman Shafabakhsh,\] \[05/28/2025,\] \[Koln\]
