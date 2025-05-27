@@ -1,0 +1,309 @@
+---
+title: "Importing Data in R - Exploring Packages and Their Advantages"
+shorttitle: "Exploring Packages and Their Advantages"
+author:
+  - name: "Yassaman Shafabakhsh (Matriculation Number:400806611)"
+    corresponding: true
+    email: shafabakhsh.yassaman@stud.hs-fresenius.de
+    affiliations:
+      - name: "Hochschule Fresenius - University of Applied Science"
+        department: "International Management, M.A."
+        address: 
+        city: 
+        region: n
+        country: null
+        postal-code: null
+author-note:
+  status-changes: 
+    affiliation-change: null
+    deceased: null
+  disclosures:
+    study-registration: null
+    data-sharing: null
+    related-report: null
+    conflict-of-interest: null
+    financial-support: null
+    gratitude: null
+    authorship-agreements: null
+abstract: "Importing data is a critical first step in data analysis, ensuring accuracy and efficiency throughout the workflow. R offers several tidyverse-friendly packages—such as readr, readxl, haven, rio, and jsonlite—that simplify loading data from formats like CSV, Excel, SPSS, JSON, and databases. This paper provides an overview of the most widely used import packages in R, highlighting their functions, advantages, limitations, and example usage. Choosing the right package helps maintain data integrity and supports smooth, reproducible analysis in R."
+keywords: [R programming, data import, tidyverse, readr, readxl, haven, jsonlite, rio, vroom, readODS, DBI, data preprocessing, R packages]
+bibliography: biblio.bib
+format:
+  apaquarto-html: default
+  apaquarto-typst: default
+  apaquarto-pdf:
+    documentmode: man
+editor: 
+  markdown: 
+    wrap: 72
+---
+
+## <!-- The introduction should not have a level-1 heading such as Introduction. -->
+
+```{r}
+#| echo: false
+#| message: false
+#| warning: false
+# install.packages("tidyverse")
+library("tidyverse")
+```
+
+In data analysis, importing data is an essential initial step that
+allows analysts and researchers to load external data into R for
+examination, cleaning, visualization, and statistical analysis. R is
+highly versatile and provides multiple convenient methods for importing
+different data formats through dedicated packages, each optimized for
+specific file types and uses. Selecting the right method is crucial for
+maintaining data integrity and ensuring efficient analysis workflows.
+
+# Why Importing Data Matters
+
+Importing data is a key first step in data analysis that ensures your data is accurate, manageable, and compatible with your tools. Doing this correctly improves the quality and reliability of your entire analysis.
+
+Key benefits include:
+
+- Accuracy – Correctly reads and preserves data structure
+- Efficiency – Saves time, especially with large datasets
+- Compatibility – Supports various file types and software
+
+In short, proper data import in R sets the foundation for effective and trustworthy analysis.
+
+# Using R Packages for Importing Data
+
+R offers specialized packages that make it easy to import data from various formats like CSV, Excel, SPSS, SAS, and Stata. These tools are designed to load data quickly and accurately, each optimized for specific file types. Choosing the right package helps reduce errors, streamline your workflow, and improve the overall efficiency of your analysis.
+
+R has several powerful packages that simplify data import. These are
+popular data-importing packages from the tidyverse, along with clear
+examples of datasets you might typically import with each:
+
+1.  **readr**: Efficiently reads CSV, TSV, and other delimited text
+    files.
+
+Function: read_csv(), read_tsv()
+
+Advantage: - Fast and efficient and can handles large files - Good
+handling of missing values
+
+Disadvantage: - Only works with delimited text files (CSV, TSV) - No
+support for Excel, SPSS.
+
+Example dataset: mtcars.csv
+
+```{r}
+library(readr)
+data <- read_csv("mtcars.csv")
+
+```
+
+Furthermore, explore readr’s other functions
+[here](https://r4ds.hadley.nz/data-import.html#tbl-students-table)
+
+2.  **readxl**: Used to read Excel (.xls and .xlsx files)
+
+Function: read_excel()
+
+Advantage: - No dependency on external software like Excel - Simple
+syntax - Supports multiple sheets
+
+Disadvantage: - Can only read/import data from Excel files, but cannot
+write or export data back to Excel files. - Does not support Excel
+formulas or advanced formatting.
+
+Example dataset: "iris.xlsx"
+
+```{r}
+# install.packages("readxl")
+library(readxl)
+data("iris") # Load built-in iris dataset
+head(iris)
+
+# install.packages("writexl")
+library(writexl)
+write_xlsx(iris, "iris.xlsx")  # This creates iris.xlsx in your working directory
+data <- read_excel("iris.xlsx") # Read the Excel file using readxl
+
+```
+
+
+3.  **rio**: Used to all-in-one package for importing/exporting multiple
+    formats.
+
+Function: import()
+
+Advantage: - One function for many formats e.g. "import("file.csv")". -
+Supports .csv, .xlsx, .sav, .dta, .json, .tsv, .rds, and many more. -
+Very beginner-friendly.
+
+Disadvantage: - Internally depends on other packages (e.g., readxl,
+haven, etc.) - Less control for advanced users.
+
+To know more about this package, refer to @epirhandbook2025import.
+
+Example #1: mtcars dataset
+
+```{r}
+# install.packages("rio")
+library(rio)
+library(dplyr)
+data <- import("https://vincentarelbundock.github.io/Rdatasets/csv/datasets/mtcars.csv")
+data %>% filter(mpg > 25)
+```
+
+Example #2: gapminder.csv
+
+```{r}
+# install.packages("rio")
+library(rio)
+
+# Download the file
+download.file(
+  url = "https://raw.githubusercontent.com/resbaz/r-novice-gapminder-files/master/data/gapminder-FiveYearData.csv",
+  destfile = "gapminder.csv",
+  mode = "wb"
+)
+data <- import("gapminder.csv")  # Import the dataset using rio
+head(data) # View the first few rows
+```
+
+
+4.  **readODS**: Used to import .ods files in R. This package is useful
+    if you work with data from organizations, governments, or partners
+    who use open-source tools and send .ods files.
+
+Function: read_ods()
+
+Advantage: - No need for Excel: Works without requiring Microsoft Excel
+or Java. - Simple syntax: Similar to read_excel() and read_csv()
+functions, making it easy to use. - Cross-platform support: works on
+Windows, Mac, and Linux systems.
+
+Disadvantage: - Less commonly used in practice: .ods files are not as
+widely used as .xlsx or .csv formats. - Limited features: It primarily
+supports reading .ods files. It does not support writing/saving .ods
+files. - No advanced formatting support: cell formatting, formulas, and
+charts are not preserved or interpreted during import.
+
+```{r}
+# install.packages("writeODS")
+# install.packages("readODS")
+library(readODS)
+data(iris)
+write_ods(iris, "iris.ods")
+iris_data <- read_ods("iris.ods", sheet = 1)
+head(iris_data)
+```
+
+
+5.  **DBI + RSQLite**: The DBI package lets R connect to different
+    databases like SQLite, MySQL, MariaDB, PostgreSQL, SQL Server, and
+    Oracle.
+
+Function: dbReadTable(), dbConnect()
+
+Advantage: - Easy-to-use functions for many types of databases. - Good
+for large amounts of data. - Works with different database packages.
+
+Disadvantage: - Needs extra packages depending on the database. - You
+must have access to the database. - Some SQL knowledge helps for complex
+tasks.
+
+
+6.  **vroom**: Used for fast reading of large delimited files.
+
+Function: vroom()
+
+Advantages: - Extremely fast for big files - Tidyverse-friendly
+
+Disadvantages: - Less stable than readr in rare edge cases
+
+
+7.  **haven**: Used to Import SPSS, Stata, and SAS data
+
+Function: read_sav(), read_dta(), read_sas()
+
+Advantage: - Keeps the extra information from the original file — like
+the full names of questions or what values mean (e.g., 1 = Male, 2 =
+Female) — so you don’t lose important details when you import the
+data. - Tidyverse-friendly (returns tibbles) - Allows to easily work
+with data from those programs such as SPSS (.sav), Stata (.dta), and SAS
+(.sas7bdat) directly in R without needing to convert the files manually.
+
+Disadvantage: - Only for SPSS/Stata/SAS formats - Slightly slower on
+very large datasets compared to readr
+
+Example dataset: survey_data.sav 
+
+
+8.  **jsonlite**: Used for reading JSON files (tidyverse-compatible).
+
+Function: fromJSON()
+
+Advantage: - Handles nested data - Converts to lists or data frames -
+Good for API data - real time data from websites or online services like
+weather, news, or stock prices.
+
+Disadvantage: - Output may need restructuring for tidy analysis - Not
+part of core tidyverse (but compatible)
+
+
+For deeper exploration of importing data using R packages, watch these videos @statquest2018import @quantpsych2020three.
+
+Also refer to @team2000r and @wickham2017r to get more information on importing data using R packages.
+
+Furthermore, explore [Import data with c()](https://hubchev.github.io/ds/80_exercises.html) which gives a view on importing different kinds of datasets. 
+
+
+# Conclusion
+
+Importing data is a critical first step in any data analysis workflow,
+and R offers a wide range of packages tailored to different data formats
+and sources. Whether working with spreadsheets, statistical software
+files, databases, or web-based APIs, R provides efficient and
+tidyverse-friendly tools to streamline the process.
+
+Packages like readr, readxl, and haven enable smooth integration of CSV,
+Excel, and SPSS data, while tools like rio and vroom offer flexibility
+and speed. For advanced needs, packages such as DBI, jsonlite, and rvest
+allow users to access structured databases, real-time APIs, and web
+data.
+
+By choosing the right package for each data type and following tidy
+principles, analysts and researchers can ensure that their data is
+loaded accurately, cleanly, and in a format ready for immediate analysis
+and visualization in R.
+
+# References
+
+<!-- References will auto-populate in the refs div below -->
+
+::: {#refs}
+:::
+
+
+# Affidative
+
+I hereby affirm that this submitted paper was authored unaided and solely by me. Additionally, no other sources than those in the reference list were used. Parts of this paper, including tables and figures, that have been taken either verbatim or analogously from other works have in each case been properly cited with regard to their origin and authorship. This paper either in parts or in its entirety, be it in the same or similar form, has not been submitted to any other examination board and has not been published.
+
+I acknowledge that the university may use plagiarism detection software to check my thesis. I agree to cooperate with any investigation of suspected plagiarism and to provide any additional information or evidence requested by the university.
+
+Checklist:
+
+-   [x] The handout contains 3-5 pages of text.
+-   [x] The submission contains the Quarto file of the handout.
+-   [x] The submission contains the Quarto file of the presentation.
+-   [x] The submission contains the HTML file of the handout.
+-   [x] The submission contains the HTML file of the  presentation.
+-   [x] The submission contains the PDF file of the  handout.
+-   [x] The submission contains the PDF file of the  presentation.
+-   [x] The title page of the presentation and the handout contain personal details (name, email, matriculation number). 
+-   [x] The handout contains a abstract.
+-   [x] The presentation and the handout contain a bibliography, created using BibTeX with APA citation style.
+-   [x] Either the handout or the presentation contains R code that proof the expertise in coding.
+-   [x] The handout includes an introduction to guide the reader and a conclusion summarizing the work and discussing potential further investigations and readings, respectively.
+-   [x] All significant resources used in the report and R code development.
+-   [x] The filled out Affidavit.
+-   [x] A concise description of the successful use of Git and GitHub, as detailed here: [https://github.com/hubchev/make_a_pull_request](https://github.com/hubchev/make_a_pull_request).
+-   [x] The link to the presentation and the handout published on GitHub.
+
+\[Yassaman Shafabakhsh,\] \[28/05/2025,\] \[Cologne\]
+
